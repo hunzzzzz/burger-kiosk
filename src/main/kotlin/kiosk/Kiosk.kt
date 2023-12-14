@@ -131,37 +131,37 @@ class Kiosk {
     // [Option 5] 결제 완료
     private fun completePay() {
         val sumOfPayList = payList.sumOf { it.price }
-        // 장바구니에 담긴 메뉴가 아무것도 없는 경우
-        if (sumOfPayList == 0.0) {
-            System.err.println(Resources.NO_VALUES_IN_PAY_LIST)
+        if (!possibleToPay(sumOfPayList)) {
             Thread.sleep(500)
             println(Resources.MOVE_TO_MENU)
             return
+        } else {
+            println(
+                "${Resources.COMPLETE_PAYMENT} (${
+                    DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss").format(LocalDateTime.now())
+                })"
+            )
+            payList.clear()
+            customer!!.spendMoney(sumOfPayList)
+            println(Resources.MOVE_TO_MENU)
         }
-        // 은행점검시간 (23:50 ~ 00:15)에 결제를 시도하는 경우
-        else if ((LocalDateTime.now().hour == 23 && LocalDateTime.now().minute >= 50)
+    }
+
+    // [Option 5] 결제가 불가능한 경우의 수들
+    private fun possibleToPay(sum: Double): Boolean {
+        if (sum == 0.0) {
+            System.err.println(Resources.NO_VALUES_IN_PAY_LIST)
+            return false
+        } else if ((LocalDateTime.now().hour == 23 && LocalDateTime.now().minute >= 50)
             || (LocalDateTime.now().hour == 0 && LocalDateTime.now().minute <= 15)
         ) {
             System.err.println(Resources.BANK_MAINTENANCE_TIME)
-            Thread.sleep(500)
-            println(Resources.MOVE_TO_MENU)
-            return
-        }
-        // 잔액이 부족한 경우
-        else if (customer!!.getCustomerAmount() < sumOfPayList * 1000) {
+            return false
+        } else if (customer!!.getCustomerAmount() < sum * 1000) {
             System.err.println(Resources.INSUFFICIENT_BALANCE)
-            Thread.sleep(500)
-            println(Resources.MOVE_TO_MENU)
-            return
+            return false
         }
-        println(
-            "${Resources.COMPLETE_PAYMENT} (${
-                DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss").format(LocalDateTime.now())
-            })"
-        )
-        payList.clear()
-        customer!!.spendMoney(sumOfPayList)
-        println(Resources.MOVE_TO_MENU)
+        return true
     }
 
     // [Option 5] 결제 취소
