@@ -2,7 +2,7 @@ package resource
 
 class BurgerResources {
     companion object {
-        const val BURGER_MENU = "\n[ Burgers MENU ]"
+        const val BURGER_MENU = "\n[ BURGER MENU ]"
         const val BURGER1_NAME = "ShackBurger\t\t"
         const val BURGER1_PRICE = 8.4
         const val BURGER1_DESCRIPTION = "\t비프 패티와 함께 토마토, 양상추, 쉑소스가 토핑된 치즈버거"

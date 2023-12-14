@@ -3,7 +3,7 @@ package menu.side
 import menu.Menu
 import resource.Resources
 
-class Side : Menu() {
+open class Side : Menu() {
     override val name: String
         get() = Resources.SIDE_NAME
     override val price: Double

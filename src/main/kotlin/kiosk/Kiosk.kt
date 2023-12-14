@@ -1,16 +1,18 @@
 package kiosk
 
-import menu.side.Side
 import menu.drink.Drink
 import menu.Menu
 import menu.burger.*
+import menu.side.*
 import resource.BurgerResources
 import resource.Resources
+import resource.SideResources
 
 class Kiosk {
     private val menuList =
         arrayListOf<Menu>(Burger(), Side(), Drink())
     private val burgerList = arrayListOf<Burger>(ShackBurger(), SmokeShack(), ShroomBurger(), BourbonBaconShack())
+    private val sideList = arrayListOf<Side>(CheeseFries(), ShackAttack(), FlatHotDog(), ChickenBites())
     fun start() {
         var option: String
         println(Resources.START_KIOSK)
@@ -20,6 +22,7 @@ class Kiosk {
             option = readln()
             when (option) {
                 "1" -> showBurgerMenu()
+                "2" -> showSideMenu()
                 "4" -> {
                     println(Resources.QUIT_KIOSK)
                     return
@@ -53,8 +56,18 @@ class Kiosk {
         while (true) {
             option = readln()
             when (option) {
-                "5" -> showMenu()
+                "5" -> return
             }
         }
+    }
+
+    // [Option 2] 사이드 메뉴를 보여주는 메서드
+    private fun showSideMenu() {
+        println(SideResources.SIDE_MENU)
+        for (i in sideList.indices) {
+            println("${i + 1}. ${sideList[i]}")
+        }
+        println("5. ${SideResources.BACK_NAME} |\t\t| ${SideResources.BACK_DESCRIPTION}")
+        chooseBurgerOption()
     }
 }
