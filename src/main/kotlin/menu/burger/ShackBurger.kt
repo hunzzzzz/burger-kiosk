@@ -1,9 +1,9 @@
 package menu.burger
 
-import resource.Strings
+import resource.BurgerResources
 
 class ShackBurger : Burger() {
-    override val name: String = Strings.BURGER1_NAME
-    override val price: Double = Strings.BURGER1_PRICE
-    override val description: String = Strings.BURGER1_DESCRIPTION
+    override val name: String = BurgerResources.BURGER1_NAME
+    override val price: Double = BurgerResources.BURGER1_PRICE
+    override val description: String = BurgerResources.BURGER1_DESCRIPTION
 }

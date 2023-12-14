@@ -1,23 +1,7 @@
 package resource
 
-class Strings {
+class BurgerResources {
     companion object {
-        // 키오스크 시작
-        const val START_KIOSK = "\n\\\\\\\\\\ SHAKE SHACK 버거에 오신 것을 환영합니다. /////\n"
-        const val SHOW_OPTIONS = "아래 메뉴판을 보시고 메뉴를 골라 입력해주세요."
-
-        // 쉑쉑버거 메뉴
-        const val SHAKESHACK_MENU = "\n[ SHAKESHACK MENU ]"
-        const val BURGER_NAME = "햄버거\t"
-        const val BURGER_DESCRIPTION = "\t앵거스 비프 통살을 다져만든 버거입니다."
-        const val SIDE_NAME = "사이드 메뉴"
-        const val SIDE_DESCRIPTION = "\t버거를 먹을 때 사이드 메뉴가 빠져서는 안되죠!"
-        const val DRINK_NAME = "음료\t\t"
-        const val DRINK_DESCRIPTION = "\t매장에서 직접 만드는 시원한 음료들도 잊지 마세요."
-        const val QUIT_NAME = "종료\t\t"
-        const val QUIT_DESCRIPTION = "\t프로그램을 종료합니다."
-
-        // 버거 메뉴
         const val BURGER_MENU = "\n[ Burgers MENU ]"
         const val BURGER1_NAME = "ShackBurger\t\t"
         const val BURGER1_PRICE = 8.4
@@ -33,8 +17,5 @@ class Strings {
         const val BURGER4_DESCRIPTION = "\t메이커스 마크 위스키를 활용한 버번 베이컨 잼, 바삭하게 튀긴 적양파, 화이트 체다 치즈가 올라간 비프 버거"
         const val BACK_NAME = "뒤로가기\t\t\t"
         const val BACK_DESCRIPTION = "\t메뉴 화면으로 돌아갑니다."
-
-        // 키오스크 종료
-        const val QUIT_KIOSK = "키오스크를 종료합니다. 좋은 하루 되세요!"
     }
 }

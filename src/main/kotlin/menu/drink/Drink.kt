@@ -1,13 +1,13 @@
 package menu.drink
 
 import menu.Menu
-import resource.Strings
+import resource.Resources
 
 class Drink : Menu() {
     override val name: String
-        get() = Strings.DRINK_NAME
+        get() = Resources.DRINK_NAME
     override val price: Double
         get() = 0.0
     override val description: String
-        get() = Strings.DRINK_DESCRIPTION
+        get() = Resources.DRINK_DESCRIPTION
 }
