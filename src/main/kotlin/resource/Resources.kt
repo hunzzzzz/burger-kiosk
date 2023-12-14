@@ -45,6 +45,7 @@ open class Resources {
         const val CHOOSE_BEFORE_PAY = "1. 결제\t\t\t2. 메뉴로 이동"
         const val NO_VALUES_IN_PAY_LIST = "장바구니에 아무것도 담겨 있지 않습니다."
         const val BANK_MAINTENANCE_TIME = "은행 점검 시간에는 결제가 불가능합니다. (23:50 ~ 00:15)"
+        const val INSUFFICIENT_BALANCE = "잔액이 부족합니다."
         const val COMPLETE_PAYMENT = "결제를 완료하였습니다."
         const val CANCEL_PAYMENT = "결제를 취소하였습니다."
 

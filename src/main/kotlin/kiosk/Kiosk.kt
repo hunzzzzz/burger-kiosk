@@ -1,5 +1,6 @@
 package kiosk
 
+import customer.Customer
 import menu.Menu
 import menu.burger.*
 import menu.drink.*
@@ -17,9 +18,12 @@ class Kiosk {
     private val sideList = arrayListOf<Menu>(CheeseFries(), ShackAttack(), FlatHotDog(), ChickenBites())
     private val drinkList = arrayListOf<Menu>(FountainSoda(), Lemonade(), ShackCoffee(), RootBeer())
     private val payList = arrayListOf<Menu>() // 장바구니
+    private var customer: Customer? = null // 사용자
 
-    fun start() {
+    fun start(customer: Customer) {
+        this.customer = customer
         var option: String
+
         println(Resources.START_KIOSK)
         while (true) {
             Thread.sleep(1000)
@@ -126,9 +130,9 @@ class Kiosk {
 
     // [Option 5] 결제 완료
     private fun completePay() {
-        val nowTime = LocalDateTime.now()
+        val sumOfPayList = payList.sumOf { it.price }
         // 장바구니에 담긴 메뉴가 아무것도 없는 경우
-        if (payList.sumOf { it.price } == 0.0) {
+        if (sumOfPayList == 0.0) {
             System.err.println(Resources.NO_VALUES_IN_PAY_LIST)
             Thread.sleep(500)
             println(Resources.MOVE_TO_MENU)
@@ -143,12 +147,20 @@ class Kiosk {
             println(Resources.MOVE_TO_MENU)
             return
         }
+        // 잔액이 부족한 경우
+        else if (customer!!.getCustomerAmount() < sumOfPayList * 1000) {
+            System.err.println(Resources.INSUFFICIENT_BALANCE)
+            Thread.sleep(500)
+            println(Resources.MOVE_TO_MENU)
+            return
+        }
         println(
             "${Resources.COMPLETE_PAYMENT} (${
                 DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss").format(LocalDateTime.now())
             })"
         )
         payList.clear()
+        customer!!.spendMoney(sumOfPayList)
         println(Resources.MOVE_TO_MENU)
     }
 
