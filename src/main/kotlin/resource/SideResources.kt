@@ -2,6 +2,7 @@ package resource
 
 class SideResources {
     companion object {
+        // 사이드 메뉴
         const val SIDE_MENU = "\n[ SIDE MENU ]"
         const val SIDE1_NAME = "Cheese Fries\t"
         const val SIDE1_PRICE = 5.9
