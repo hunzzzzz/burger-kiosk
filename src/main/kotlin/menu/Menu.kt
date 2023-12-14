@@ -7,8 +7,8 @@ abstract class Menu {
 
     override fun toString(): String {
         return if (this.price == 0.0)
-            "${this.name} | ${this.description}"
+            "${this.name}\t|\t${this.description}"
         else
-            "${this.name} | ${String.format("%4.1f", this.price)} | ${this.description}"
+            "${this.name}\t|\t${String.format("%4.1f", this.price)}\t|\t${this.description}"
     }
 }
