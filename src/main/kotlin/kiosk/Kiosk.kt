@@ -34,6 +34,7 @@ class Kiosk {
                     println(Resources.QUIT_KIOSK)
                     return
                 }
+
                 "5" -> pay()
                 "6" -> clearPayList()
                 else -> System.err.println(Resources.CHOOSE_WRONG_OPTION)
@@ -125,9 +126,20 @@ class Kiosk {
 
     // [Option 5] 결제 완료
     private fun completePay() {
+        val nowTime = LocalDateTime.now()
+        // 장바구니에 담긴 메뉴가 아무것도 없는 경우
         if (payList.sumOf { it.price } == 0.0) {
             System.err.println(Resources.NO_VALUES_IN_PAY_LIST)
-            Thread.sleep(200)
+            Thread.sleep(500)
+            println(Resources.MOVE_TO_MENU)
+            return
+        }
+        // 은행점검시간 (23:50 ~ 00:15)에 결제를 시도하는 경우
+        else if ((LocalDateTime.now().hour == 23 && LocalDateTime.now().minute >= 50)
+            || (LocalDateTime.now().hour == 0 && LocalDateTime.now().minute <= 15)
+        ) {
+            System.err.println(Resources.BANK_MAINTENANCE_TIME)
+            Thread.sleep(500)
             println(Resources.MOVE_TO_MENU)
             return
         }
