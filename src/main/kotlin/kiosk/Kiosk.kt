@@ -8,6 +8,8 @@ import resource.BurgerResources
 import resource.DrinkResources
 import resource.Resources
 import resource.SideResources
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class Kiosk {
     private val menuList = arrayListOf<Menu>(Burger(), Side(), Drink())
@@ -20,7 +22,7 @@ class Kiosk {
         var option: String
         println(Resources.START_KIOSK)
         while (true) {
-            Thread.sleep(500)
+            Thread.sleep(1000)
             showMenu()
 
             option = readln()
@@ -32,8 +34,8 @@ class Kiosk {
                     println(Resources.QUIT_KIOSK)
                     return
                 }
-
-                "5" -> {}
+                "5" -> pay()
+                "6" -> clearPayList()
                 else -> System.err.println(Resources.CHOOSE_WRONG_OPTION)
             }
         }
@@ -52,7 +54,7 @@ class Kiosk {
         println("6. ${String.format("%4s", Resources.CLEAR_NAME)}\t|\t${Resources.CLEAR_DESCRIPTION}")
     }
 
-    // 버거/사이드/음료 메뉴를 보여주는 메서드
+    // [Option 1~3] 버거/사이드/음료 메뉴를 보여주는 메서드
     private fun showMenuInDetail(resources: Resources, list: ArrayList<Menu>) {
         var option: String
 
@@ -75,11 +77,11 @@ class Kiosk {
         }
     }
 
-    // 메뉴를 클릭했을 때 장바구니에 담는 메서드
+    // [Option 1~3] 특정 메뉴를 클릭했을 때 장바구니에 담는 메서드
     private fun putInPayList(menu: Menu) {
         Thread.sleep(500)
         println()
-        println(menu)
+        println(menu.toString().trimStart())
         println(Resources.ASK_TO_ADD_MENU)
         println(Resources.CHOOSE_BEFORE_ADD_MENU)
 
@@ -95,4 +97,57 @@ class Kiosk {
         }
     }
 
+    // [Option 5] 장바구니 리스트를 보여주는 메서드
+    private fun showPayList() {
+        println()
+        println(Resources.ASK_ORDER)
+        println(Resources.ORDER)
+        for (menu in payList)
+            println(menu.toString().trimStart())
+        println(Resources.TOTAL)
+        println("₩ ${payList.sumOf { it.price }}")
+    }
+
+    // [Option 5] 결제 창
+    private fun pay() {
+        Thread.sleep(500)
+        showPayList()
+        println()
+
+        println(Resources.CHOOSE_BEFORE_PAY)
+        val option = readln()
+        when (option) {
+            "1" -> completePay()
+            "2" -> cancelPay()
+            else -> System.err.println(Resources.CHOOSE_WRONG_OPTION)
+        }
+    }
+
+    // [Option 5] 결제 완료
+    private fun completePay() {
+        if (payList.sumOf { it.price } == 0.0) {
+            System.err.println(Resources.NO_VALUES_IN_PAY_LIST)
+            Thread.sleep(200)
+            println(Resources.MOVE_TO_MENU)
+            return
+        }
+        println(
+            "${Resources.COMPLETE_PAYMENT} (${
+                DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss").format(LocalDateTime.now())
+            })"
+        )
+        payList.clear()
+        println(Resources.MOVE_TO_MENU)
+    }
+
+    // [Option 5] 결제 취소
+    private fun cancelPay() {
+        println(Resources.CANCEL_PAYMENT)
+        println(Resources.MOVE_TO_MENU)
+    }
+
+    // [Option 6] 장바구니 비우기
+    private fun clearPayList() {
+        println(Resources.CLEAR_PAY_LIST)
+    }
 }
