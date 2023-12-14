@@ -1,6 +1,8 @@
 package resource
 
-class Resources {
+open class Resources {
+    open val menu = ""
+    open fun getMenuName() = menu
     companion object {
         // 키오스크 시작
         const val START_KIOSK = "\\\\\\\\\\ SHAKE SHACK 버거에 오신 것을 환영합니다. /////"
@@ -17,8 +19,13 @@ class Resources {
         const val QUIT_NAME = "종료"
         const val QUIT_DESCRIPTION = "프로그램을 종료합니다."
         const val CHOOSE_WRONG_OPTION = "잘못된 값을 입력하셨습니다. 다시 입력해주세요."
-        const val BACK_NAME = "뒤로가기"
+        const val BACK_NAME = "뒤로 가기"
         const val BACK_DESCRIPTION = "메뉴 화면으로 돌아갑니다."
+        const val ORDER_MENU = "\n[ ORDER MENU ]"
+        const val ORDER_NAME = "주문"
+        const val ORDER_DESCRIPTION = "장바구니를 확인 후 주문을 진행합니다."
+        const val CLEAR_NAME = "비우기"
+        const val CLEAR_DESCRIPTION = "장바구니를 초기화합니다."
 
         // 장바구니 추가
         const val ASK_TO_ADD_MENU = "위 메뉴를 장바구니에 추가하시겠습니까?"

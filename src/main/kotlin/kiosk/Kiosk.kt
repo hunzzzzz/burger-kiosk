@@ -11,9 +11,9 @@ import resource.SideResources
 
 class Kiosk {
     private val menuList = arrayListOf<Menu>(Burger(), Side(), Drink())
-    private val burgerList = arrayListOf<Burger>(ShackBurger(), SmokeShack(), ShroomBurger(), BourbonShack())
-    private val sideList = arrayListOf<Side>(CheeseFries(), ShackAttack(), FlatHotDog(), ChickenBites())
-    private val drinkList = arrayListOf<Drink>(FountainSoda(), Lemonade(), ShackCoffee(), RootBeer())
+    private val burgerList = arrayListOf<Menu>(ShackBurger(), SmokeShack(), ShroomBurger(), BourbonShack())
+    private val sideList = arrayListOf<Menu>(CheeseFries(), ShackAttack(), FlatHotDog(), ChickenBites())
+    private val drinkList = arrayListOf<Menu>(FountainSoda(), Lemonade(), ShackCoffee(), RootBeer())
     private val payList = arrayListOf<Menu>() // 장바구니
 
     fun start() {
@@ -25,14 +25,15 @@ class Kiosk {
 
             option = readln()
             when (option) {
-                "1" -> showBurgerMenu()
-                "2" -> showSideMenu()
-                "3" -> showDrinkMenu()
+                "1" -> showMenuInDetail(BurgerResources(), burgerList)
+                "2" -> showMenuInDetail(SideResources(), sideList)
+                "3" -> showMenuInDetail(DrinkResources(), drinkList)
                 "4" -> {
                     println(Resources.QUIT_KIOSK)
                     return
                 }
 
+                "5" -> {}
                 else -> System.err.println(Resources.CHOOSE_WRONG_OPTION)
             }
         }
@@ -45,24 +46,27 @@ class Kiosk {
         for (i in menuList.indices) {
             println("${i + 1}. ${menuList[i]}")
         }
-        println("4. ${Resources.QUIT_NAME}\t\t|\t${Resources.QUIT_DESCRIPTION}")
+        println("4. ${String.format("%4s", Resources.QUIT_NAME)}\t|\t${Resources.QUIT_DESCRIPTION}")
+        println(Resources.ORDER_MENU)
+        println("5. ${String.format("%4s", Resources.ORDER_NAME)}\t|\t${Resources.ORDER_DESCRIPTION}")
+        println("6. ${String.format("%4s", Resources.CLEAR_NAME)}\t|\t${Resources.CLEAR_DESCRIPTION}")
     }
 
-    // [Option 1] 버거 메뉴를 보여주는 메서드
-    private fun showBurgerMenu() {
+    // 버거/사이드/음료 메뉴를 보여주는 메서드
+    private fun showMenuInDetail(resources: Resources, list: ArrayList<Menu>) {
         var option: String
 
         while (true) {
             Thread.sleep(500)
-            println(BurgerResources.BURGER_MENU)
-            for (i in burgerList.indices) {
-                println("${i + 1}. ${burgerList[i]}")
+            println(resources.getMenuName())
+            for (i in list.indices) {
+                println("${i + 1}. ${list[i]}")
             }
-            println("5. ${Resources.BACK_NAME}\t\t|\t\t\t|\t${Resources.BACK_DESCRIPTION}")
+            println("5. ${String.format("%7s", Resources.BACK_NAME)}\t|\t\t\t|\t${Resources.BACK_DESCRIPTION}")
 
             option = readln()
             when (option) {
-                "1", "2", "3", "4" -> putInPayList(burgerList[option.toInt() - 1])
+                "1", "2", "3", "4" -> putInPayList(list[option.toInt() - 1])
                 "5" -> return
                 else -> {
                     System.err.println(Resources.CHOOSE_WRONG_OPTION)
@@ -90,50 +94,5 @@ class Kiosk {
             else -> System.err.println(Resources.CHOOSE_WRONG_OPTION)
         }
     }
-
-    // [Option 2] 사이드 메뉴를 보여주는 메서드
-    private fun showSideMenu() {
-        var option: String
-
-        while (true) {
-            Thread.sleep(500)
-            println(SideResources.SIDE_MENU)
-            for (i in sideList.indices) {
-                println("${i + 1}. ${sideList[i]}")
-            }
-            println("5. ${Resources.BACK_NAME} |\t\t| ${SideResources.BACK_DESCRIPTION}")
-
-            option = readln()
-            when (option) {
-                "5" -> return
-                else -> {
-                    System.err.println(Resources.CHOOSE_WRONG_OPTION)
-                }
-            }
-        }
-    }
-
-    // [Option 3] 음료 메뉴를 보여주는 메서드
-    private fun showDrinkMenu() {
-        var option: String
-
-        while (true) {
-            Thread.sleep(500)
-            println(DrinkResources.DRINK_MENU)
-            for (i in drinkList.indices) {
-                println("${i + 1}. ${drinkList[i]}")
-            }
-            println("5. ${Resources.BACK_NAME} |\t\t| ${Resources.BACK_DESCRIPTION}")
-
-            option = readln()
-            when (option) {
-                "5" -> return
-                else -> {
-                    System.err.println(Resources.CHOOSE_WRONG_OPTION)
-                }
-            }
-        }
-    }
-
 
 }
